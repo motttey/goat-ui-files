@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head><title>GoatSupporter</title>
+
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/form.css">
+
+<script src="js/bootstrap-image-gallery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.scrollTo-1.4.3.1-min.js" type="text/javascript"></script>
+<script src="js/jquery.easing-1.3.min.js"></script>
+<script src="js/default.js"></script>
+<!-- Using Font Awesome-->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<!-- ナビゲーション用の スタイル-->
+<link rel="stylesheet" type="text/css" href="css/navigation.css"> 
+
+<!-- View Tooltip (Using tooltip.js in Bootstrap)--> 
+<script type="text/javascript" src="js/tooltip.js"></script> 
+<script type="text/javascript">
+$(document).ready(function(){
+  if (window.matchMedia('screen and (min-width:800px)').matches) { 
+    //500px以上の処理
+  }else{
+      $('[data-toggle="tooltip"]').tooltip();
+  }
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('[data-toggle="tooltipplan"]').tooltip();
+});
+</script>
+<!-- ここまでナビゲーション用の スタイル-->
+
+<!-- for iCheck -->
+<script type="text/javascript" src="js/icheck.js"></script>
+<link rel="stylesheet" type="text/css" href="css/skins/flat/red.css">
+
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat',
+    radioClass: 'iradio_flat',
+    //increase checkable area (max:200%)
+    increaseArea: '100%'
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat-red',
+    radioClass: 'iradio_flat-red',
+    increaseArea: '100%'
+  });
+});
+</script>
+
+
+<!-- 年齢が正当な値かチェック -->
+<!--
+<script type="text/javascript">
+$(function(){
+  $("input[value=submit]").click(function(){
+  if($("input[type=number][id=age]").val() <= 0){
+    res = "負の値です" ;
+    $("div.error").text(res);
+  }
+  })
+});
+</script>
+-->
+
+<!-- 入力内容が空でないかチェック -->
+<!-- html/css側で対応できるかもしれないので以下のスクリプトは消す可能性有 -->
+<!--
+<script type="text/javascript">
+$(function(){
+
+  //前回の表示内容を削除
+  //$("div.error").empty();
+
+  var res = "";
+  $("input[value=submit]").click(function(){
+  if($("input[type=text][id=name]").val() == ""){
+    res += "あなたの名前が入力されていません<br>" ;
+  }
+  /*
+  if($("input[type=text][id=partnername]").val() == "" ){
+    res += "パートナーの名前が入力されていません" ;
+    $("div.error").html(res);
+  }
+  */
+  /*
+  if(($("input[type=text][id=name]").val() == false ) && ($("input[type=text][id=name]").val() == false )){
+    res = "性別が入力されていません" ;
+    $("div.error").text(res);
+  }
+  */
+  else if($("input[type=number][id=age]").val() == null){
+    res += "年齢が入力されていません" ;
+  }
+  else if($("input[type=datetime][id=datetime]").val() == null){
+    res += "日程が入力されていません" ;
+  }  
+
+  $("div.error").html(res);
+  })
+});
+</script>
+-->
+<script>
+function submit_button_clicked() {
+  var f = document.getElementsByTagName('forms')[0];
+  if(f.checkValidity()) {
+    f.submit();
+  } else {
+    alert(document.getElementById('div.error').validationMessage);
+  }
+}
+</script>
+
+</head>
+
+<body>
+
+<!-- ナビゲーション部分 -->
+<!-- TODO:選択されているページ部分の色を変更する-->
+<!-- Static navbar -->
+<div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" 
+      data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+    </div>
+    <!-- ナビゲーションバー -->
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      <li ><a href="dashboard.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Dashboard">
+             <i class="fa fa-home"></i> 
+             <span class="navname">Dashboard</span>
+             <div class="tooltip">Dashboard</div>
+      </a></li>
+      <li class="active"><a href="form.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Form">
+             <i class="fa fa-pencil-square"></i>
+             <span class="navname">Form</span>
+             <div class="tooltip"><span>Form</span></div>
+      </a></li>
+      <li><a href="questionnaire.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Questionnaire">
+             <i class="fa fa-dot-circle-o"></i>
+             <span class="navname">Questionnaire</span>
+             <div class="tooltip"><span>Questionnaire</span></div>
+      </a></li>
+      <li><a href="inline_spotlist_iframe.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Spot List">
+             <i class="fa fa-list-alt"></i>
+             <span class="navname">Spot List</span>
+             <div class="tooltip"><span>Spot List</span></div>
+      </a></li>
+      <li><a href="timeline.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Timeline">
+             <i class="fa fa-calendar"></i>
+             <span class="navname">Timeline</span>
+             <div class="tooltip"><span>Timeline</span></div>
+      </a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+ </div>
+
+<!-- ここまでナビゲーション部分 -->
+
+  <!--　フォーム群  -->
+  <div class="header">
+		<!--
+    フォーム画面
+    -->
+    <span>Please fill forms </span>
+	</div>
+
+  <div class="container">
+
+  <div class="col-xs-12">
+  <!--
+  <h1 class="cntr">Please fill forms</h1>
+  <div class="line"></div>
+  -->
+
+  <!-- アクション先phpファイルを入れる-->
+  <!-- requied属性およびpattern属性で入力値チェック -->
+  <form class="forms" method = "post" target = "questionnaire.html">
+  <fieldset>
+    
+    <span class="formdesc">新規プランの作成</span>
+
+    <ul>
+      <li class="name">
+        <label class = "forms" for="name" style="text-decoration:underline;" >名 前</label>
+        <input type="text" id="name" placeholder="Name"  requied pattern="^[a-zA-Z_-\d]{1,50}$">
+      </li>
+      <!--
+      <li class="name">
+        <label class = "forms" for="name" style="text-decoration:underline;">PartnerName</label>
+        <input type="text" id="partnername" placeholder="Name">
+      </li>
+      -->
+      <!-- Gender
+          man:0
+          woman:1 でデータベースへ格納
+      -->
+       <li class="gender" requied>
+          <label class = "forms" for="gender" style="text-decoration:underline;">性 別</label>
+          <label for "man"><input name="gender" type= "radio" id="man" value = "0" checked>
+              男</label>
+          <label for "woman"><input name="gender" type= "radio" id="woman" value = "1">
+            女</label>
+      </li>     
+      <li class="age">
+        <label class = "forms" for="Age" max = "120" min = "0" style="text-decoration:underline;" >年 齢</label>
+        <input type="number" id="age" placeholder="Age" requied >
+      </li>
+
+      <br>
+
+      <li class="numofpeople">
+        <label class = "forms" for="NumofPeople" max = "15" min = "0" style="text-decoration:underline;" >人 数</label>
+        <input type="number" id="numofpeople" placeholder="NumofPeople" requied>
+      </li>
+      <li class="userbudget">
+        <label class = "forms" for="UserBudget" max = "100000" min = "0" style="text-decoration:underline;" >予算額 
+          <i style="text-decoration:none;font-size:80%;">(一人当たり)</i></label>
+        <input type="number" id="userbudget" placeholder="UserBudget" requied>
+      </li>
+      
+      <!-- 
+          Datetime型
+          Ex:YYYY-MM-DDThh:mm:ssTZD
+          YYYY:Year
+          MM:Month
+          DD:Day
+          hh:Hour
+          mm:min
+          ss:sec
+          TZD:TimeZone
+       -->
+      <li class="date" >    
+        <label class = "forms" for="datetime" style="text-decoration:underline;">開始時刻</label>
+        <input type="datetime" id="datetime" placeholder="Datetime" >
+      </li>
+
+    </ul>
+    </fieldset>
+      <input type="submit" class="btn btn-salmon" value="submit" />  
+
+    </form>
+
+    <form class="pastplan" method = "post" target = "questionnaire.html">
+    <span class="formdesc" >過去のプランを修正・レビューする</span>
+
+    <ul class="selectplan nav nav-pills nav-stacked" requied>
+        <li>
+          <!--プランの開始時刻をデータベースから取得して表示-->
+          <label>プラン1 <span class="spotstarttime" style = "font-size:90%;" >(2015/04/02 10:30)</span></label>
+          <input name="plan" type= "radio" id="plan1" value = "1">
+          <br>
+          <!--該当プランのタイムラインへのリンク-->
+          <!--オンマウス時とかに詳細を出す-->
+
+          <div class="plan-images">
+
+          <a class="nav-href" data-toggle="tooltipplan" data-placement="bottom" 
+          title="SpotName1 10:30"> <!--ここ(title)に取得したスポット名,時刻を入れる-->
+             <img src="img/food (1).jpg"></img> 
+          </a>
+
+          <a class="nav-href" data-toggle="tooltipplan" data-placement="bottom" 
+          title="SpotName2 13:30"> <!--ここに取得したスポット名,時刻を入れる-->
+             <img src="img/food (2).jpg"></img> 
+          </a>
+
+          <a class="nav-href" data-toggle="tooltipplan" data-placement="bottom" 
+          title="SpotName3 14:30"> <!--ここに取得したスポット名,時刻を入れる-->
+             <img src="img/food (3).jpg"></img> 
+          </a>
+
+          <a class="nav-href" data-toggle="tooltipplan" data-placement="bottom" 
+          title="SpotName4 16:00"> <!--ここに取得したスポット名,時刻を入れる-->
+             <img src="img/food (4).jpg"></img> 
+          </a>
+        
+          <a class="nav-href" data-toggle="tooltipplan" data-placement="bottom" 
+          title="SpotName5 18:00"> <!--ここに取得したスポット名,時刻を入れる-->
+             <img src="img/food (5).jpg"></img> 
+          </a>
+          </div><!-- plan-images-->
+        </li>
+        
+        <li>
+          <label>プラン2</label>
+          <input name="plan" type= "radio" id="plan2" value = "2">
+          <br>
+          <!--該当プランのタイムラインへのリンク-->
+          <!--オンマウス時とかに詳細を出す-->
+
+          <div class="plan-images">
+          <span href=""><img src="img/food (1).jpg"/></span>
+          <span href=""><img src="img/food (2).jpg"/></span>
+          <span href=""><img src="img/food (3).jpg"/></span>
+          <span href=""><img src="img/food (4).jpg"/></span>
+          <span href=""><img src="img/food (5).jpg"/></span>
+
+          <br clear="both"/>
+          </br>
+          </div><!-- plan-images-->
+        </li>
+          <!-- 過去のプランの数だけ表示-->
+    </ul>   
+    <br>
+    <input type="submit"  class="btn btn-salmon" value="review" />  
+
+    </form>
+  </div>
+
+  </div> <!-- contaner-->
+</body>
+
+</html>

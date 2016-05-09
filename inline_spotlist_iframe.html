@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head><title>GoatSupporter</title>
+
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/spotlist.css">
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/inlineliststyle.css">
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- Using Font Awesome-->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<!-- ナビゲーション用の スタイル-->
+<link rel="stylesheet" type="text/css" href="css/navigation.css"> 
+
+<!-- View Tooltip (Using tooltip.js in Bootstrap)--> 
+<script type="text/javascript" src="js/tooltip.js"></script> 
+<!--画面サイズが500px以上のメディア(すまほ)ではツールチップ表示-->
+<script type="text/javascript">
+$(document).ready(function(){
+  if (window.matchMedia('screen and (min-width:800px)').matches) { 
+    //500px以上の処理
+  }else{
+      $('[data-toggle="tooltip"]').tooltip();
+  }
+});
+</script>
+
+<!-- ここまでナビゲーション用の スタイル-->
+
+<!-- for iCheck -->
+<script type="text/javascript" src="js/icheck.js"></script>
+<link rel="stylesheet" type="text/css" href="css/skins/flat/red.css">
+
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat',
+    radioClass: 'iradio_flat',
+    //increase checkable area (max:200%)
+    increaseArea: '100%'
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat-red',
+    radioClass: 'iradio_flat-red',
+    increaseArea: '100%'
+  });
+});
+</script>
+
+</head>
+
+<body>
+
+<!-- ナビゲーション部分 -->
+<!-- TODO:選択されているページ部分の色を変更する-->
+<!-- Static navbar -->
+<div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" 
+      data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+    </div>
+    <!-- ナビゲーションバー -->
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      <li ><a href="dashboard.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Dashboard">
+             <i class="fa fa-home"></i> 
+             <span class="navname">Dashboard</span>
+             <div class="tooltip">Dashboard</div>
+      </a></li>
+      <li><a href="form.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Form">
+             <i class="fa fa-pencil-square"></i>
+             <span class="navname">Form</span>
+             <div class="tooltip"><span>Form</span></div>
+      </a></li>
+      <li><a href="questionnaire.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Questionnaire">
+             <i class="fa fa-dot-circle-o"></i>
+             <span class="navname">Questionnaire</span>
+             <div class="tooltip"><span>Questionnaire</span></div>
+      </a></li>
+      <li class="active">
+        <a href="inline_spotlist_iframe.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Spot List">
+             <i class="fa fa-list-alt"></i>
+             <span class="navname">Spot List</span>
+             <div class="tooltip"><span>Spot List</span></div>
+      </a></li>
+      <li><a href="timeline.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Timeline">
+             <i class="fa fa-calendar"></i>
+             <span class="navname">Timeline</span>
+             <div class="tooltip"><span>Timeline</span></div>
+      </a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+</div>
+<!-- ここまでナビゲーション部分 -->
+
+<!-- ヘッダ -->
+<div class="header">
+  <!--
+	リスト画面
+  <div class="line"></div>
+  -->
+  <!-- 残り予算額が入る -->
+  <div class="budget">
+    <span class="budgetlabel" style="text-align:left;"><i class="fa fa-jpy"></i>残り予算額:</span>
+    <!-- ここに残り予算額が入る -->
+    <span class="budgetval" style="color:#FA8072;"> hogehoge</span>    
+
+      <form class="form-budgetpm" style="display:inline;text-align:left;">
+          <!--
+          <li class="pm" requied>
+          + <input name="puls" type= "radio" id="puls" value = "0" checked>
+          - <input name="minus" type= "radio" id="minus" value = "1">
+          </li>
+          -->
+          <!--このフォームに正の値が入ったとき,DB内の予算属性がその分プラスされる
+              負の値であればマイナス
+          -->
+          <label class = "form-budgetpm" for="add-budget">＋</label>
+          <input type="text" name ="add-budget" class="input-medium add-budget" placeholder="add budget">
+          <button type="submit" class="btn btm-sm btn-search" >Modify</button>
+      </form>
+  </div>
+
+
+  <div class="line">
+  </div>
+
+
+  <!-- 検索ボックス -->
+  <div class="searchbox" style="display: inline;">
+  <form class="form-search" style="display: inline;">
+  <span class="navbar-search" >
+    <span class="input-append">
+      <!-- 必要なクエリ分だけフォームを追加 -->
+      <span class="add-on"><i class="fa fa-search"></i></span>
+      <input type="text" name ="search_query" class="input-medium search-query" placeholder="Query">
+      <button type="submit" class="btn btm-sm btn-search" >Go </button>
+    </span>
+  </span>
+  </form>
+  </div>
+
+  <div class="dropdown" style="display: inline; text-align:right">
+    <button class="btn dropdown-button" type="image" data-toggle="dropdown" style="display:inline;">
+      <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true">
+    </span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">プラン1</a></li>
+      <li><a href="#">プラン2</a></li>
+      <li><a href="#">プラン3</a></li>
+    </ul>
+  </div>
+
+  <div class="line">
+  </div>
+
+
+</div>
+<!-- ここまでヘッダ -->
+
+<iframe src = "inline_spotlist.html" width="100%" height = "100%" frameborder="0" scrolling="no">
+</iframe>
+</body>
+
+</html>

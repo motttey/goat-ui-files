@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head><title>GoatSupporter</title>
+
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="css/timeline.css">
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/timeline.css">
+
+
+<!-- ナビゲーション用の スタイル-->
+<link rel="stylesheet" type="text/css" href="css/navigation.css">
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- View Tooltip (Using tooltip.js in Bootstrap)-->
+<script type="text/javascript" src="js/tooltip.js"></script>
+
+<!--画面サイズが500px以上以下のメディア(すまほ)ではツールチップ表示-->
+<script type="text/javascript">
+$(document).ready(function(){
+  if (window.matchMedia('screen and (min-width:800px)').matches) { 
+    //500px以上の処理
+  }else{
+      $('[data-toggle="tooltip"]').tooltip();
+  }
+});
+</script>
+
+<!-- ナビゲーションバーをfixed にする-->
+<script type="text/javascript">
+$(function() {
+    var nav = $('.navber');
+    //navの位置    
+    var navTop = nav.offset().top;
+    //スクロールするたびに実行
+    $(window).scroll(function () {
+        var winTop = $(this).scrollTop();
+        //スクロール位置がnavの位置より下だったらクラスfixedを追加
+        if (winTop >= navTop) {
+            nav.addClass('fixed')
+        } else if (winTop <= navTop) {
+            nav.removeClass('fixed')
+        }
+    });
+});
+</script>
+<!-- ここまでナビゲーション用の スタイル-->
+
+<!-- Using Font Awesome-->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<!--<script type="text/javascript" src="js/slick.min.js"></script> -->
+
+<!-- For modal.js-->
+<script type="text/javascript" src="js/modal.js"></script>
+<script type="text/javascript">
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').focus()
+})
+</script>
+
+</head>
+
+<body>
+
+<!-- ナビゲーション部分 -->
+<!-- TODO:選択されているページ部分の色を変更する-->
+<!-- Static navbar -->
+<div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" 
+      data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+    </div>
+
+<!-- ナビゲーションバー -->
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      <li><a href="dashboard.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Dashboard">
+             <i class="fa fa-home"></i> 
+             <span class="navname">Dashboard</span>
+             <div class="tooltip">Dashboard</div>
+      </a></li>
+      <li><a href="form.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Form">
+             <i class="fa fa-pencil-square"></i>
+             <span class="navname">Form</span>
+             <div class="tooltip"><span>Form</span></div>
+      </a></li>
+      <li><a href="questionnaire.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Questionnaire">
+             <i class="fa fa-dot-circle-o"></i>
+             <span class="navname">Questionnaire</span>
+             <div class="tooltip"><span>Questionnaire</span></div>
+      </a></li>
+      <li><a href="inline_spotlist_iframe.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Spot List">
+             <i class="fa fa-list-alt"></i>
+             <span class="navname">Spot List</span>
+             <div class="tooltip"><span>Spot List</span></div>
+      </a></li>
+      <li class="active"><a href="timeline.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Timeline">
+             <i class="fa fa-calendar"></i>
+             <span class="navname">Timeline</span>
+             <div class="tooltip"><span>Timeline</span></div>
+      </a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+</div>
+<!-- ここまでナビゲーション部分 -->
+
+	<div class="header">
+	<!--タイムライン画面-->
+  
+  <!--残り予算額が入る-->
+  <div class="budget">
+    <span class="budgetval"><i class="fa fa-jpy"></i>残り予算額:</span>
+  </div>
+
+  <div class="line">
+  </div>
+  
+  <!--フィードバック機能へ遷移するボタン-->
+  <div class="feedback">
+    <button class="btn btm-sm btn-search" onclick="location.href='feedback.html'" >Feedback</button>
+  </div>
+
+	</div>
+
+  <div class = "container">
+
+  <!-- Addにより登録したスポットを時系列順に表示 -->
+  <ul class="cbp_tmtimeline">
+    <li>
+      <!-- 現在時刻を取得してここに入れる -->
+      <time class="cbp_tmtime" datetime="2013-04-10 18:30">
+      <!--予定の日付と時刻を取得して入れる-->
+      <span>4/10/13</span> <span>18:30</span></time>
+      
+      <!-- スポットの種類を表すアイコンを入れる 
+          スポットとアイコンの対比例
+          イベント:fa fa-ticket
+          カフェ:fa fa-coffee
+          バー:fa fa-glass
+          アウトドア:fa fa-tree
+          ライブ:fa fa-music
+          レストラン:fa fa-cutlery 
+          ...
+      -->
+      <!-- TODO:アイコンはBootstrapなどで使用フリーなやつを可能な限り使う 必要であれば作成する-->
+      <!-- TODO:イベント追加ごとにOrder ByでSelectする感じで時系列で並び替え-->
+      <!-- ここに表示するスポットタイプのアイコンとポップアップ内のものは一致させる-->
+
+      <div class="cbp_tmicon"><i class="fa fa-ticket"></i>       
+      </div>
+      <div class="cbp_tmlabel">
+        <!-- スポット名を取得して表示 -->
+        <h2>longlonglonglonglonglong スポット名</h2>
+        <p class="abstcont">
+          abstruct
+        </p> 
+
+        <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_2">Detail</button>
+
+        <button class="btn btn-close modal-open" ><a class="link">Cancel</a></button>
+
+          <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+          <div id="Modal_2" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                  <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <!-- スポット名称を入れる -->
+                   <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                  </div>
+
+                  <div class="modal-body">
+                  <div class="row">
+                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                      <div class="spot-description">詳細が入る
+                      </div>
+
+                      <!-- エリア・価格帯・タイプを取得して表示-->
+                      <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                      <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                      <!-- 連絡先がHPの場合 -->
+                      <!--
+                      <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                      -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+
+                      <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+                      -->
+
+                      <br>
+                      <span class="businessh"><i class="fa fa-clock-o"></i>
+                      <span class="starttime">営業開始時刻 〜</span>
+                      <span class="endtime">営業終了時刻 </span>                
+                      </span> 
+                       / 
+                      <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                    </div> 
+
+                    <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                      <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                    </div>
+                  </div> <!-- row -->
+                  </div> <!-- modal-body -->
+
+                  <div class="modal-footer">
+                    <div class="row">
+
+                      <form class="forms" method = "post" action=".php">
+                      <label class = "forms" for="datetime">開始時刻:</label>
+                      <input type="datetime" id="datetime" placeholder="Datetime" >
+                      <br>
+
+                        <!-- TODO:Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                      <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                      <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                      </form>
+
+                    </div> <!-- row -->
+                  </div> <!-- modal-footer -->
+
+                  </div> <!-- modal-dialog -->
+                </div> <!-- modal-content -->            
+              </div> <!-- modal fade -->
+
+            </div> <!-- cbp_tmlabel -->
+    </li>
+
+    <li>
+
+      <time class="cbp_tmtime" datetime="2013-04-11T12:04">
+      <!--予定の日付と時刻を入れる-->
+      <span>4/11/13</span> <span>12:04</span></time>
+      <div class="cbp_tmicon"><i class="fa fa-coffee"></i>       
+      </div>
+
+      <div class="cbp_tmlabel">
+        <h2>スポット名</h2>
+        <p>概要</p> 
+        <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_2">Detail</button>
+
+        <button class="btn btn-close modal-open" ><a class="link">Cancel</a></button>
+
+          <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+          <div id="Modal_2" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                  <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <!-- スポット名称を入れる -->
+                   <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                  </div>
+
+                  <div class="modal-body">
+                  <div class="row">
+                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                      <div class="spot-description">詳細が入る
+                      </div>
+
+                      <!-- エリア・価格帯・タイプを取得して表示-->
+                      <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                      <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                      <!-- 連絡先がHPの場合 -->
+                      <!--
+                      <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                      -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+
+                      <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+                      -->
+
+                      <br>
+                      <span class="businessh"><i class="fa fa-clock-o"></i>
+                      <span class="starttime">営業開始時刻 〜</span>
+                      <span class="endtime">営業終了時刻 </span>                
+                      </span> 
+                       / 
+                      <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                    </div> 
+
+                    <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                      <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                    </div>
+                  </div> <!-- row -->
+                  </div> <!-- modal-body -->
+
+                  <div class="modal-footer">
+                    <div class="row">
+
+                      <form class="forms" method = "post" action=".php">
+                      <label class = "forms" for="datetime">開始時刻:</label>
+                      <input type="datetime" id="datetime" placeholder="Datetime" >
+                      <br>
+
+                        <!-- TODO:Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                      <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                      <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                      </form>
+
+                    </div> <!-- row -->
+                  </div> <!-- modal-footer -->
+
+                  </div> <!-- modal-dialog -->
+                </div> <!-- modal-content -->            
+              </div> <!-- modal fade -->
+
+            </div><!--cbp_tmlabel -->
+      </li>
+  </ul> 
+  
+  </div> <!--container-->
+
+</body>
+</html>

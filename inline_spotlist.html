@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head><title>GoatSupporter</title>
+
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta charset = "utf-8">
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/spotlist.css">
+  <link rel="stylesheet" type="text/css" href="css/inlineliststyle.css">
+
+  <!-- Using Font Awesome-->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/slick.min.js"></script>
+
+  <!-- For modal.js-->
+  <script type="text/javascript" src="js/modal.js"></script>
+  <script type="text/javascript">
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+  })
+  </script>
+
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <!-- このページを直接表示することは想定していないため,ナビゲーション部分は省略 -->
+    <!-- Ajaxを使うとしたら,このページの一部分(div)のみをAjaxでspotlist.phpの出力として表示する -->
+    <div class="ajaxspotlist">
+      <ul class="nav nav-pills nav-stacked">
+        <!-- 必要であれば XMLとかでSemantic な マークアップにする-->
+        <li class="selectedspot">
+          <div class="row spottitle">
+            <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+              <!-- スポット名を取得して表示 -->
+              <!-- タイトルが長い場合には省略表示される -->
+              <p class="title">タイトル タイトル タイトル タイトル タイトル タイトル タイトル タイトル </p>
+            </div>
+            <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+              <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Detail</button>
+            </div>
+          </div> <!-- row -->
+          <div class="row spotdatail abst"> 
+            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+
+              <!-- 概要を取得して表示 -->
+              <p class="abstcont">
+                概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 
+                概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 
+                概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 
+                概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 概要 
+              </p>
+              <!--<img src="img/dummy.png" class="list-image img-circle" alt="example">-->
+              
+            </div>
+
+            <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+              <img src="img/dummy.png" class="list-image img-circle" alt="example">
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+            </div> 
+          </div>  <!-- row -->  
+
+          <!-- 詳細表示 -->
+          <div class="row spotdatail param">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="line">
+              </div>
+              <!-- エリア・価格帯・タイプを取得して表示-->
+              <!-- スポットタイプのアイコンは種類に寄って変わる-->
+              <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+              <span class="type"><i class="fa fa-coffee"></i>タイプ</span>   <br> 
+              <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span>   / 
+              <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>      
+            </div>
+          </div>
+
+
+          <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+          <div id="Modal_1" class="modal fade">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <!-- スポット名称を入れる -->
+                  <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                      <div class="spot-description">詳細が入る
+                      </div>
+
+                      <!-- エリア・価格帯・タイプを取得して表示-->
+                      <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                      <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                      <!-- 連絡先がHPの場合 -->
+                        <!--
+                        <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                      -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+
+                        <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+                           -->
+
+                           <br>
+                           <span class="businessh"><i class="fa fa-clock-o"></i>
+                            <span class="starttime">営業開始時刻 〜</span>
+                            <span class="endtime">営業終了時刻 </span>                
+                          </span> 
+                          / 
+                          <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                        </div><!--col-xs-7 col-sm-8 col-md-9 col-lg-9-->
+
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                          <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                        </div> <!-- row -->
+                      </div><!-- modal-body -->
+
+                      <div class="modal-footer">
+                        <div class="row">
+                          <!-- form actionに遷移先のphp入れればできそう-->
+                          <form class="forms" method = "post" action=".php">
+                            <label class = "forms" for="datetime">開始時刻:</label>
+                            <input type="datetime" id="datetime" placeholder="Datetime" >
+                            <br>
+
+                            <!-- Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                            <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                            <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                          </form>
+
+
+                        </div> <!-- row -->
+                      </div> <!-- modal-footer-->
+
+                    </div><!--modal-content-->
+                  </div> <!--modal-dialog-->
+                </div><!--modal fade-->
+
+
+              </div>
+            </li>
+
+            <!-- ここから先はリスト表示のテストのためだけなので消してもよい -->
+
+            <li class="selectedspot">
+              <div class="row spottitle">
+                <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+                  <!-- スポット名を取得して表示 -->
+                  タイトル 
+                </div>
+                <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+                  <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Detail</button>
+                </div>
+              </div> <!-- row -->
+              <div class="row spotdatail abst"> 
+                <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+
+                  <!-- 概要を取得して表示 -->
+                  概要
+                  <!--<img src="img/dummy.png" class="list-image img-circle" alt="example">-->
+                </div>
+
+                <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                  <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+                </div> 
+              </div>  <!-- row -->  
+
+              <!-- 詳細表示 -->
+              <div class="row spotdatail param">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="line">
+                  </div>
+                  <!-- エリア・価格帯・タイプを取得して表示-->
+                  <!-- スポットタイプのアイコンは種類に寄って変わる-->
+                  <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                  <span class="type"><i class="fa fa-coffee"></i>タイプ</span>   <br> 
+                  <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span>   / 
+                  <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>      
+                </div>
+              </div>
+
+
+              <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+              <div id="Modal_1" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <!-- スポット名称を入れる -->
+                      <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                          <div class="spot-description">詳細が入る
+                          </div>
+
+                          <!-- エリア・価格帯・タイプを取得して表示-->
+                          <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                          <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                          <!-- 連絡先がHPの場合 -->
+                        <!--
+                        <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                      -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+
+                        <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+                       -->
+
+                           <br>
+                           <span class="businessh"><i class="fa fa-clock-o"></i>
+                            <span class="starttime">営業開始時刻 〜</span>
+                            <span class="endtime">営業終了時刻 </span>                
+                          </span> 
+                          / 
+                          <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                        </div><!--col-xs-7 col-sm-8 col-md-9 col-lg-9-->
+
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                          <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                        </div> <!-- row -->
+                      </div><!-- modal-body -->
+
+                      <div class="modal-footer">
+                        <div class="row">
+                          <!-- form actionに遷移先のphp入れればできそう-->
+                          <form class="forms" method = "post" action=".php">
+                            <label class = "forms" for="datetime">開始時刻:</label>
+                            <input type="datetime" id="datetime" placeholder="Datetime" >
+                            <br>
+
+                            <!-- Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                            <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                            <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                          </form>
+
+                        </div> <!-- row -->
+                      </div> <!-- modal-footer-->
+
+                    </div><!--modal-content-->
+                  </div> <!--modal-dialog-->
+                </div><!--modal fade-->
+
+
+              </div>
+            </li>
+          </ul>
+        </div><!--ajaxspotlist-->
+
+
+        <div class="ajaxspotlist">
+          <ul class="nav nav-pills nav-stacked">
+            <!-- 必要であれば XMLとかでSemantic な マークアップにする-->
+            <li>
+              <div class="row spottitle">
+                <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+                  <!-- スポット名を取得して表示 -->
+                  タイトル 
+                </div>
+                <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+                  <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Detail</button>
+                </div>
+              </div>
+              <div class="row spotdatail abst"> 
+                <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+
+                  <!-- 概要を取得して表示 -->
+                  概要
+                  <!--<img src="img/dummy.png" class="list-image img-circle" alt="example">-->
+                </div>
+
+                <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                  <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+                </div> 
+              </div>    
+
+              <!-- 詳細表示 -->
+              <div class="row spotdatail param">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="line">
+                  </div>
+                  <!-- エリア・価格帯・タイプを取得して表示-->
+                  <!-- スポットタイプのアイコンは種類に寄って変わる-->
+                  <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                  <span class="type"><i class="fa fa-coffee"></i>タイプ</span>   <br> 
+                  <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span>   / 
+                  <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>      
+                </div>
+              </div>
+
+              <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+              <div id="Modal_1" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <!-- スポット名称を入れる -->
+                      <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                          <div class="spot-description">詳細が入る
+                          </div>
+
+                          <!-- エリア・価格帯・タイプを取得して表示-->
+                          <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                          <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                          <!-- 連絡先がHPの場合 -->
+                        <!--
+                        <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                      -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+  
+                        <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+　                       -->
+  
+                           <br>
+                           <span class="businessh"><i class="fa fa-clock-o"></i>
+                            <span class="starttime">営業開始時刻 〜</span>
+                            <span class="endtime">営業終了時刻 </span>                
+                          </span> 
+                          / 
+                          <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                          <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <div class="row">
+                          <!-- form actionに遷移先のphp入れればできそう-->
+                          <form class="forms" method = "post" action=".php">
+                            <label class = "forms" for="datetime">開始時刻:</label>
+                            <input type="datetime" id="datetime" placeholder="Datetime" >
+                            <br>
+
+                            <!-- Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                            <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                            <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                          </form>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div> <!-- ajaxspotlist -->
+        <!-- ここから先はリスト表示のテストのためだけなので消してもよい -->
+
+        <div class="ajaxspotlist">
+          <ul class="nav nav-pills nav-stacked">
+            <!-- 必要であれば XMLとかでSemantic な マークアップにする-->
+            <li class="unselectedspot">
+              <div class="row spottitle">
+                <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+                  <!-- スポット名を取得して表示 -->
+                  タイトル 
+                </div>
+                <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+                  <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Detail</button>
+                </div>
+              </div>
+              <div class="row spotdatail abst"> 
+                <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+
+                  <!-- 概要を取得して表示 -->
+                  概要
+                  <!--<img src="img/dummy.png" class="list-image img-circle" alt="example">-->
+                </div>
+
+                <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                  <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+                </div> 
+              </div>    
+
+              <!-- 詳細表示 -->
+              <div class="row spotdatail param">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="line">
+                  </div>
+                  <!-- エリア・価格帯・タイプを取得して表示-->
+                  <!-- スポットタイプのアイコンは種類に寄って変わる-->
+                  <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                  <span class="type"><i class="fa fa-coffee"></i>タイプ</span>   <br> 
+                  <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span>   / 
+                  <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>      
+                </div>
+              </div>
+
+              <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+              <div id="Modal_1" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <!-- スポット名称を入れる -->
+                      <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                          <div class="spot-description">詳細が入る
+                          </div>
+
+                          <!-- エリア・価格帯・タイプを取得して表示-->
+                          <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                          <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                          <!-- 連絡先がHPの場合 -->
+                        <!--
+                        <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                      -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+    
+                        <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+　                      -->
+    
+                           <br>
+                           <span class="businessh"><i class="fa fa-clock-o"></i>
+                            <span class="starttime">営業開始時刻 〜</span>
+                            <span class="endtime">営業終了時刻 </span>                
+                          </span> 
+                          / 
+                          <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                          <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <div class="row">
+                          <!-- form actionに遷移先のphp入れればできそう-->
+                          <form class="forms" method = "post" action=".php">
+                            <label class = "forms" for="datetime">開始時刻:</label>
+                            <input type="datetime" id="datetime" placeholder="Datetime" >
+                            <br>
+
+                            <!-- Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                            <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                            <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                          </form>
+
+                        </div> <!-- row -->
+                      </div> <!-- modal-footer-->
+
+                    </div><!--modal-content-->
+                  </div> <!--modal-dialog-->
+                </div><!--modal fade-->
+
+
+              </div>
+            </li>
+
+            <!-- ここから先はリスト表示のテストのためだけなので消してもよい -->
+
+            <li class="unselectedspot">
+              <div class="row spottitle">
+                <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+                  <!-- スポット名を取得して表示 -->
+                  タイトル 
+                </div>
+                <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+                  <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Detail</button>
+                </div>
+              </div>
+              <div class="row spotdatail abst"> 
+                <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+
+                  <!-- 概要を取得して表示 -->
+                  概要
+                  <!--<img src="img/dummy.png" class="list-image img-circle" alt="example">-->
+                </div>
+
+                <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                  <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+                </div> 
+              </div>    
+
+              <!-- 詳細表示 -->
+              <div class="row spotdatail param">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="line">
+                  </div>
+                  <!-- エリア・価格帯・タイプを取得して表示-->
+                  <!-- スポットタイプのアイコンは種類に寄って変わる-->
+                  <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                  <span class="type"><i class="fa fa-coffee"></i>タイプ</span>   <br> 
+                  <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span>   / 
+                  <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>      
+                </div>
+              </div>
+
+              <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+              <div id="Modal_1" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <!-- スポット名称を入れる -->
+                      <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                          <div class="spot-description">詳細が入る
+                          </div>
+
+                          <!-- エリア・価格帯・タイプを取得して表示-->
+                          <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                          <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                          <!-- 連絡先がHPの場合 -->
+                        <!--
+                        <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                        -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+  
+                        <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+　                       -->
+  
+                           <br>
+                           <span class="businessh"><i class="fa fa-clock-o"></i>
+                            <span class="starttime">営業開始時刻 〜</span>
+                            <span class="endtime">営業終了時刻 </span>                
+                          </span> 
+                          / 
+                          <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                          <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <div class="row">
+                          <!-- form actionに遷移先のphp入れればできそう-->
+                          <form class="forms" method = "post" action=".php">
+                            <label class = "forms" for="datetime">開始時刻:</label>
+                            <input type="datetime" id="datetime" placeholder="Datetime" >
+                            <br>
+
+                            <!-- Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                            <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                            <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div> <!-- ajaxspotlist -->
+
+
+        <div class="ajaxspotlist">
+          <ul class="nav nav-pills nav-stacked">
+            <!-- 必要であれば XMLとかでSemantic な マークアップにする-->
+            <li>
+              <div class="row spottitle">
+                <div class="col-xs-7 col-sm-8 col-md-8 col-lg-8">
+                  <!-- スポット名を取得して表示 -->
+                  タイトル 
+                </div>
+                <div class="col-xs-5 col-sm-4 col-md-4 col-lg-4">
+                  <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Detail</button>
+                </div>
+              </div>
+              <div class="row spotdatail abst"> 
+                <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+
+                  <!-- 概要を取得して表示 -->
+                  概要
+                  <!--<img src="img/dummy.png" class="list-image img-circle" alt="example">-->
+                </div>
+
+                <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                  <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                </div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+                </div> 
+              </div>    
+
+              <!-- 詳細表示 -->
+              <div class="row spotdatail param">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="line">
+                  </div>
+                  <!-- エリア・価格帯・タイプを取得して表示-->
+                  <!-- スポットタイプのアイコンは種類に寄って変わる-->
+                  <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                  <span class="type"><i class="fa fa-coffee"></i>タイプ</span>   <br> 
+                  <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span>   / 
+                  <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>      
+                </div>
+              </div>
+
+              <!-- 遷移元ボタンのtargetと一致するようなユニークなidを付加する-->
+              <div id="Modal_1" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <!-- スポット名称を入れる -->
+                      <h4 class="modal-title"><span class="spotname">スポット名</span> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                          <div class="spot-description">詳細が入る
+                          </div>
+
+                          <!-- エリア・価格帯・タイプを取得して表示-->
+                          <span class= "address"><i class="fa fa-map-marker"></i>住所</span>
+                          <span class= "phonnum"><i class="fa fa-phone"></i>電話番号</span> <br>
+
+                          <!-- 連絡先がHPの場合 -->
+                        <!--
+                        <span class= "url"><i class="fa fa-laptop"></i>URL</span> <br>
+                        -->
+
+                      <!-- データベースより出力されるパラメータに従った種類のFont Awesomeのアイコンを表示する-->
+                      <!-- スポットタイプのアイコンはスポットの種類によって変わる-->
+                      <span class="area"><i class="fa fa-flag"></i>エリア</span> / 
+                      <span class="type"><i class="fa fa-ticket"></i>タイプ</span><br> 
+                      <span class="budgettype"><i class="fa fa-jpy"></i>最小価格 〜 最大価格</span> 
+
+                        <!-- 営業開始時刻と終了時刻をDatetime型とかで取得して表示 
+                        -->
+
+                           <br>
+                           <span class="businessh"><i class="fa fa-clock-o"></i>
+                            <span class="starttime">営業開始時刻 〜</span>
+                            <span class="endtime">営業終了時刻 </span>                
+                          </span> 
+                          / 
+                          <span class="timetospent"><i class="fa fa-hourglass"></i>予想消費時間</span>
+
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
+                          <img src="img/dummy.png" class="list-image img-circle" alt="example">
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <div class="row">
+                          <!-- form actionに遷移先のphp入れればできそう-->
+                          <form class="forms" method = "post" action=".php">
+                            <label class = "forms" for="datetime">開始時刻:</label>
+                            <input type="datetime" id="datetime" placeholder="Datetime" >
+                            <br>
+
+                            <!-- Add後,そのイベントをどの時間帯に加えるのかを表示する  -->
+                            <input type="submit" class="btn btn-salmon" value="add"> </input> 
+                            <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+                          </form>
+
+                        </div>
+                      </div>
+                      
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+    </div><!-- ajaxspotlist -->
+
+  </div> <!--wrapper-->
+  </body>
+
+</html>

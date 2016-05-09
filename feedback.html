@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head><title>デートアプリ</title>
+
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/inlineliststyle.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/hover.css"> -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<!-- Using Font Awesome-->
+<link rel="stylesheet" href="css/font-awesome.min.css">
+
+<!-- ナビゲーション用の スタイル-->
+<link rel="stylesheet" type="text/css" href="css/navigation.css"> 
+
+<!-- View Tooltip (Using tooltip.js in Bootstrap)--> 
+<script type="text/javascript" src="js/tooltip.js"></script> 
+<!--画面サイズが500px以上のメディア(すまほ)ではツールチップ表示-->
+<script type="text/javascript">
+$(document).ready(function(){
+  if (window.matchMedia('screen and (min-width:800px)').matches) { 
+    //500px以上の処理
+  }else{
+      $('[data-toggle="tooltip"]').tooltip();
+  }
+});
+</script>
+
+<!-- ここまでナビゲーション用の スタイル-->
+
+<!-- for iCheck -->
+<script type="text/javascript" src="js/icheck.js"></script>
+<link rel="stylesheet" type="text/css" href="css/skins/flat/red.css">
+
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat',
+    radioClass: 'iradio_flat',
+    //increase checkable area (max:200%)
+    increaseArea: '100%'
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_flat-red',
+    radioClass: 'iradio_flat-red',
+    increaseArea: '100%'
+  });
+});
+</script>
+
+<!-- 年齢が正当な値かチェック -->
+<script type="text/javascript">
+$(function(){
+  $("input[value=submit]").click(function(){
+  if($("input[type=number][id=age]").val() <= 0){
+    res = "負の値です" ;
+    $("div.error").text(res);
+  }
+  })
+});
+</script>
+
+<!-- Feedbackは任意なので入力内容チェックしなくていいかも... -->
+
+<script type="text/javascript">
+$(function(){
+  var res = "";
+  /*
+  $("input[value=submit]").click(function(){
+  if($("input[type=text][id=name]").val() == ""){
+    res += "あなたの名前が入力されていません<br>" ;
+    $("div.error").html(res);
+  }
+  if($("input[type=text][id=partnername]").val() == "" ){
+    res += "パートナーの名前が入力されていません" ;
+    $("div.error").html(res);
+  }
+  */
+  /*
+  if(($("input[type=text][id=name]").val() == false ) && ($("input[type=text][id=name]").val() == false )){
+    res = "性別が入力されていません" ;
+    $("div.error").text(res);
+  }
+  */
+  /*
+  else if($("input[type=number][id=age]").val() == null){
+    res += "年齢が入力されていません" ;
+    $("div.error").html(res);   
+  }
+  else if($("input[type=datetime][id=datetime]").val() == null){
+    res += "日程が入力されていません" ;
+    $("div.error").html(res);   
+  } 
+  */ 
+  })
+});
+
+
+</script>
+
+<!-- For modal.js-->
+<script type="text/javascript" src="js/modal.js"></script>
+<script type="text/javascript">
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+  })
+</script>
+
+
+</head>
+
+<body>
+
+<!-- ナビゲーション部分 -->
+<!-- TODO:選択されているページ部分の色を変更する-->
+<!-- Static navbar -->
+<div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" 
+      data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- ナビゲーションバー -->
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      <li ><a href="dashboard.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Dashboard">
+             <i class="fa fa-home"></i> 
+             <span class="navname">Dashboard</span>
+             <div class="tooltip">Dashboard</div>
+      </a></li>
+      <li class="active"><a href="form.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Form">
+             <i class="fa fa-pencil-square"></i>
+             <span class="navname">Form</span>
+             <div class="tooltip"><span>Form</span></div>
+      </a></li>
+      <li><a href="questionnaire.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Questionnaire">
+             <i class="fa fa-dot-circle-o"></i>
+             <span class="navname">Questionnaire</span>
+             <div class="tooltip"><span>Questionnaire</span></div>
+      </a></li>
+      <li><a href="inline_spotlist_iframe.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Spot List">
+             <i class="fa fa-list-alt"></i>
+             <span class="navname">Spot List</span>
+             <div class="tooltip"><span>Spot List</span></div>
+      </a></li>
+      <li><a href="timeline.html" class="nav-href" data-toggle="tooltip" data-placement="bottom"  title="Timeline">
+             <i class="fa fa-calendar"></i>
+             <span class="navname">Timeline</span>
+             <div class="tooltip"><span>Timeline</span></div>
+      </a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+ </div>
+</div>
+<!-- ここまでナビゲーション部分 -->
+
+  <!--　フォーム群  -->
+  <div class="header">
+		<!--
+    フォーム画面
+    <div class="line"></div>
+    -->
+    <span>Please Feedback for plan </span>
+	</div>
+
+  <div class="container">
+
+    <!--
+    <ul>
+      <li class="satisfy">
+        デートプランは役に立ましたか?(5段階評価)<br>
+        <label class = "forms" for="name" style="text-decoration:underline;"></label>
+          <label for "1-1"><input name="gender" type= "radio" id="1-1" value = "1">
+              1</label>
+          <label for "1-2"><input name="gender" type= "radio" id="1-2" value = "2">
+             2</label> 
+          <label for "1-3"><input name="gender" type= "radio" id="1-3" value = "3">
+             3</label>
+          <label for "1-4"><input name="gender" type= "radio" id="1-4" value = "4">
+             4</label> 
+          <label for "1-5"><input name="gender" type= "radio" id="1-5" value = "5">
+             5</label> 
+       </li>
+    </ui>
+  -->
+
+
+    <ul class="feedbackforms">
+        <!-- アクション先phpファイルを入れる-->
+      <form class="feedbackforms" method = "post" action = "." target = "questionnaire.html">
+      <fieldset>
+
+      <li class="feedback" requied>
+
+        <div style="text-decoration:underline;">
+          プランは役に立ちましたか?<br>
+          (5段階評価)<br></div>
+          <label for "1-1"><input name="satisfy" type= "radio" id="1-1" value = "1">
+            1</label>
+          <label for "1-2"><input name="satisfy" type= "radio" id="1-2" value = "2">
+             2</label> 
+          <label for "1-3"><input name="satisfy" type= "radio" id="1-3" value = "3">
+             3</label>
+          <label for "1-4"><input name="satisfy" type= "radio" id="1-4" value = "4">
+             4</label> 
+          <label for "1-5"><input name="satisfy" type= "radio" id="1-5" value = "5">
+             5</label> 
+      </li>
+      
+      </fieldset>
+      </form>
+
+      <li class="feedback">
+
+    <!-- スポット名称はプラン内に含まれている名称,DBから取得-->
+
+        <div style="text-decoration:underline;">
+        以下のスポットには訪問しましたか?<br></div>
+
+          <form class="feedbackforms" method = "post" action = "" target = "questionnaire.html">
+            <label for "2-1"><input name="isVisit" type= "checkbox" id="2-1" value = "1" >
+              スポット名称1</label>
+          </form>
+
+          <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_1">Review</button>
+          <br>
+
+          <form class="feedbackforms" method = "post" action = "" target = "questionnaire.html">
+            <label for "2-2"><input name="isVisit" type= "checkbox" id="2-2" value = "1">
+              スポット名称2</label>
+          </form>
+
+          <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_2">Review</button>
+          <br>
+
+          <form class="feedbackforms" method = "post" action = "" target = "questionnaire.html">
+            <label for "2-3"><input name="isVisit" type= "checkbox" id="2-3" value = "1">
+              スポット名称3</label>
+          </form>
+          <button class="btn btn-salmon" data-toggle="modal" data-target="#Modal_3">Review</button>
+          <br>
+      </li>
+
+      
+      </form>
+
+      <li class="feedback">
+
+      <form class="feedbackforms" method = "post" action = "" target = "questionnaire.html">
+      <fieldset>
+
+        <!-- スポット名称はプラン内に含まれている名称,DBから取得-->
+        <div style="text-decoration:underline;">
+        その他, アプリに対する感想や改善要求がありましたらご記入ください。<br></div>
+          <label for "impression"><input name="impression" type= "text">
+          </label>
+          <br>
+      
+      </fieldset>
+      </form>
+
+      </li>
+
+      <li class="feedback">
+
+      <form class="feedbackforms" method = "post" action = "" target = "questionnaire.html">
+      <fieldset>
+        <!-- 結果を送信 -->
+        <input type="button"  class="btn btn-salmon" value="submit" />
+      </li>
+      </fieldset>
+      </form>    
+
+    </ul>
+  <div class="error"></div>
+    <!--<input type="submit" id="submit_button" >-->
+
+  </fieldset>
+  </form>
+  </div>
+
+  <div id="Modal_1" class="modal fade reviewmodal">
+    <div class="modal-dialog">
+      <div class="modal-content" style="text-align: left;">
+
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+        <h4 class="modal-title"><span class="spotname">[スポット名]のレビュー</span> </h4>
+        </div>
+        <div class="modal-body" align="center">
+          <form class="review" method = "post" action="">
+          <div style="text-decoration:underline;">
+          このスポットはどうでしたか?<br>
+          (5段階評価)<br></div>
+          <label for "Modal_1-1"><input name="Modal_1_satisfy" type= "radio" id="Modal_1-1" value = "1">
+             1</label>
+          <label for "Modal_1-2"><input name="Modal_1_satisfy" type= "radio" id="Modal_1-2" value = "2">
+             2</label> 
+          <label for "Modal_1-3"><input name="Modal_1_satisfy" type= "radio" id="Modal_1-3" value = "3">
+             3</label>
+          <label for "Modal_1-4"><input name="Modal_1_satisfy" type= "radio" id="Modal_1-4" value = "4">
+             4</label> 
+          <label for "Modal_1-5"><input name="Modal_1_satisfy" type= "radio" id="Modal_1-5" value = "5">
+             5</label>
+          <br>
+          <div style="text-decoration:underline;">
+          レビュー入力(255文字以内)</div><br>
+          <input name="reviewsentence" type= "textarea" maxlength="255" rows="2">
+          </form>
+
+        </div>
+        <div class="modal-footer">
+        <div class="row">
+        
+          <form class="review" method = "post" action="a.php">
+        
+          <input type="submit" class="btn btn-salmon" value="save"> </input> 
+          <input type="button" data-dismiss="modal" class="btn btn-close" value="close"></input>
+          </form>
+
+        </div>
+
+      </div><!--modal-content-->
+    </div> <!--modal-dialog-->
+  </div><!--modal fade-->
+
+</body>
+
+</html>
